@@ -19,13 +19,14 @@ def refreshTable():
         my_tree.delete(data)
     for array in read():
         my_tree.insert(parent='', index='end', iid=array, text="", values=(array), tag="orow")
-    my_tree.tag_configure('orow', background='#20232a', font=('Arial', 12), foreground="#0efefe")
+    my_tree.tag_configure('orow', background='#f9f9f9', font=('Arial', 12), foreground="#000000")
     my_tree.grid(row=8, column=0, columnspan=5, rowspan=11, padx=10, pady=20)
 
 root = Tk()
 root.title("Student Registration System")
-root.geometry("1080x720")
-root.configure(bg="#121212")
+root.geometry("1080x720+1200+300")
+root.configure(bg="#ffffff")
+root.resizable(False,False)
 my_tree = ttk.Treeview(root)
 
 ph1 = tk.StringVar()
@@ -72,7 +73,7 @@ def add():
             conn.commit()
             conn.close()
         except:
-            messagebox.showinfo("Error", "Stud ID already exist")
+            messagebox.showinfo("Error", "Student ID already exist")
             return
     refreshTable()
 
@@ -131,7 +132,7 @@ def search():
     fname = str(fnameEntry.get())
     lname = str(lnameEntry.get())
     address = str(addressEntry.get())
-    phone = str(phoneEntry.get())
+    phone = str (phoneEntry.get())
     conn = connection()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM students WHERE STUDID='"+studid+"' or FNAME='"+fname+"' or LNAME='"+lname+"' or ADDRESS='"+address+"' or PHONE='"+phone+"' ")
@@ -167,79 +168,18 @@ def update():
             conn.commit()
             conn.close()
         except:
-            messagebox.showinfo("Error", "Stud ID already exist")
+            messagebox.showinfo("Error", "Student ID already exist")
             return
     refreshTable()
 
-def switch_mode():
-    global dark_mode
-    if dark_mode:
-       
-        root.configure(bg="#ffffff") 
-        label.configure(fg="#000000", bg="#ffffff")
-        studidLabel.configure(fg="#000000", bg="#ffffff")
-        fnameLabel.configure(fg="#000000", bg="#ffffff")
-        lnameLabel.configure(fg="#000000", bg="#ffffff")
-        addressLabel.configure(fg="#000000", bg="#ffffff")
-        phoneLabel.configure(fg="#000000", bg="#ffffff")
-        studidEntry.configure(bg="#f9f9f9", fg="#000000")  
-        fnameEntry.configure(bg="#f9f9f9", fg="#000000")
-        lnameEntry.configure(bg="#f9f9f9", fg="#000000")
-        addressEntry.configure(bg="#f9f9f9", fg="#000000")
-        phoneEntry.configure(bg="#f9f9f9", fg="#000000")
-        
-        # Vibrant button colors
-        addBtn.configure(bg="#4CAF50", fg="#ffffff")  
-        updateBtn.configure(bg="#2196F3", fg="#ffffff")  
-        deleteBtn.configure(bg="#F44336", fg="#ffffff")  
-        searchBtn.configure(bg="#FFC107", fg="#000000") 
-        resetBtn.configure(bg="#FF9800", fg="#ffffff")  
-        selectBtn.configure(bg="#9C27B0", fg="#ffffff")  
-        
-        style.configure("Treeview.Heading", font=('Arial Bold', 15), foreground="#000000", background="#ffffff")
-        style.configure("Treeview", background="#f9f9f9", fieldbackground="#f9f9f9", foreground="#000000")
-        dark_mode = False
-    else:
-        # Dark mode settings
-        root.configure(bg="#121212")
-        label.configure(fg="#0efefe", bg="#121212")
-        studidLabel.configure(fg="#0efefe", bg="#121212")
-        fnameLabel.configure(fg="#0efefe", bg="#121212")
-        lnameLabel.configure(fg="#0efefe", bg="#121212")
-        addressLabel.configure(fg="#0efefe", bg="#121212")
-        phoneLabel.configure(fg="#0efefe", bg="#121212")
-        studidEntry.configure(bg="#20232a", fg="#0efefe")
-        fnameEntry.configure(bg="#20232a", fg="#0efefe")
-        lnameEntry.configure(bg="#20232a", fg="#0efefe")
-        addressEntry.configure(bg="#20232a", fg="#0efefe")
-        phoneEntry.configure(bg="#20232a", fg="#0efefe")
-        
-        # Dark button colors
-        addBtn.configure(bg="#282c34", fg="#0efefe")
-        updateBtn.configure(bg="#282c34", fg="#0efefe")
-        deleteBtn.configure(bg="#282c34", fg="#0efefe")
-        searchBtn.configure(bg="#282c34", fg="#0efefe")
-        resetBtn.configure(bg="#282c34", fg="#0efefe")
-        selectBtn.configure(bg="#282c34", fg="#0efefe")
-        
-        style.configure("Treeview.Heading", font=('Arial Bold', 15), foreground="#0efefe", background="#121212")
-        style.configure("Treeview", background="#20232a", fieldbackground="#20232a", foreground="#0efefe")
-        dark_mode = True
 
-# Initialize dark mode
-dark_mode = True
-
-# Create a button to switch between light and dark modes
-modeBtn = Button(root, text="Toggle Mode", command=switch_mode, bg="#282c34", fg="#0efefe")
-modeBtn.grid(row=0, column=5, rowspan=2)
-
-label = Label(root, text="Student Registration System", font=('Arial Bold', 30), fg="#0efefe", bg="#121212")
+label = Label(root, text="Student Registration System", font=('Arial Bold', 30), fg="#000000", bg="#ffffff")
 label.grid(row=0, column=0, columnspan=8, rowspan=2, padx=50, pady=40)
 
-label_params = {'font': ('Arial', 15), 'fg': '#0efefe', 'bg': '#121212'}
-studidLabel = Label(root, text="Stud ID", **label_params)
-fnameLabel = Label(root, text="Firstname", **label_params)
-lnameLabel = Label(root, text="Lastname", **label_params)
+label_params = {'font': ('Arial', 15), 'fg': '#000000', 'bg': '#ffffff'}
+studidLabel = Label(root, text="Student ID", **label_params)
+fnameLabel = Label(root, text="First Name", **label_params)
+lnameLabel = Label(root, text="Last Name", **label_params)
 addressLabel = Label(root, text="Address", **label_params)
 phoneLabel = Label(root, text="Phone", **label_params)
 
@@ -249,7 +189,7 @@ lnameLabel.grid(row=5, column=0, padx=50, pady=5)
 addressLabel.grid(row=6, column=0, padx=50, pady=5)
 phoneLabel.grid(row=7, column=0, padx=50, pady=5)
 
-entry_params = {'width': 55, 'bd': 5, 'font': ('Arial', 15), 'bg': '#20232a', 'fg': '#0efefe'}
+entry_params = {'width': 55, 'bd': 5, 'font': ('Arial', 15), 'bg': '#f9f9f9', 'fg': '#000000'}
 studidEntry = Entry(root, textvariable=ph1, **entry_params)
 fnameEntry = Entry(root, textvariable=ph2, **entry_params)
 lnameEntry = Entry(root, textvariable=ph3, **entry_params)
@@ -262,7 +202,7 @@ lnameEntry.grid(row=5, column=1, columnspan=4, padx=5)
 addressEntry.grid(row=6, column=1, columnspan=4, padx=5)
 phoneEntry.grid(row=7, column=1, columnspan=4, padx=5)
 
-button_params = {'padx': 65, 'pady': 25, 'width': 10, 'bd': 5, 'font': ('Arial', 15), 'fg': '#0efefe', 'bg': '#282c34', 'activebackground': '#00ffcc'}
+button_params = {'padx': 65, 'pady': 25, 'width': 10, 'bd': 5, 'font': ('Arial', 15), 'fg': '#000000', 'bg': '#4CAF50', 'activebackground': '#00ffcc'}
 addBtn = Button(root, text="Add", command=add, **button_params)
 updateBtn = Button(root, text="Update", command=update, **button_params)
 deleteBtn = Button(root, text="Delete", command=delete, **button_params)
@@ -279,20 +219,26 @@ selectBtn.grid(row=13, column=5, rowspan=2)
 
 style = ttk.Style()
 style.theme_use("default")
-style.configure("Treeview.Heading", font=('Arial Bold', 15), foreground="#0efefe", background="#121212")
-style.configure("Treeview", background="#20232a", fieldbackground="#20232a", foreground="#0efefe")
+style.configure("Treeview.Heading", font=('Arial Bold', 15), fg="#000000", bg="#ffffff")
+style.configure("Treeview", bg="#f9f9f9", fieldbackground="#f9f9f9", fg="#000000")
 
-my_tree['columns'] = ("Stud ID", "Firstname", "Lastname", "Address", "Phone")
+tree_frame = Frame(root, borderwidth=2, relief='solid', bg="#ffffff")
+tree_frame.grid(row=8, column=0, columnspan=5, rowspan=11, padx=10, pady=20)
+
+
+my_tree = ttk.Treeview(tree_frame)
+
+my_tree['columns'] = ("Student ID", "First Name", "Last Name", "Address", "Phone")
 my_tree.column("#0", width=0, stretch=NO)
-my_tree.column("Stud ID", anchor=W, width=170)
-my_tree.column("Firstname", anchor=W, width=150)
-my_tree.column("Lastname", anchor=W, width=150)
+my_tree.column("Student ID", anchor=W, width=170)
+my_tree.column("First Name", anchor=W, width=150)
+my_tree.column("Last Name", anchor=W, width=150)
 my_tree.column("Address", anchor=W, width=165)
 my_tree.column("Phone", anchor=W, width=150)
 
-my_tree.heading("Stud ID", text="Student ID", anchor=W)
-my_tree.heading("Firstname", text="Firstname", anchor=W)
-my_tree.heading("Lastname", text="Lastname", anchor=W)
+my_tree.heading("Student ID", text="Student ID", anchor=W)
+my_tree.heading("First Name", text="First Name", anchor=W)
+my_tree.heading("Last Name", text="Last Name", anchor=W)
 my_tree.heading("Address", text="Address", anchor=W)
 my_tree.heading("Phone", text="Phone", anchor=W)
 
